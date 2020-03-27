@@ -1,0 +1,91 @@
+// var canvas = document.getElementById('canvas');
+// var ctx = canvas.getContext('2d');
+// window.cancelAnimationFrame(game.exit);
+
+
+
+	var bg_ctx = document.getElementById('background-layer').getContext('2d');
+	
+	bg_ctx.clearRect(0, 0, game_data.width, game_data.height);
+	
+	bg_ctx.fillStyle = 'green';
+	bg_ctx.fillRect(0, 450, 800, 150);
+	
+	bg_ctx.fillStyle = 'lightblue';
+	bg_ctx.fillRect(0, 0, 800, 450);
+	
+	bg_ctx.fillStyle = 'yellow';
+	bg_ctx.beginPath();
+	bg_ctx.arc(650, 100, 50, 0, Math.PI*2);
+	bg_ctx.fill();
+	bg_ctx.closePath();
+	
+	
+var image_objects = [];
+
+function load_images(sources, on_complete) {
+	// image_preloader
+
+	var loaded = 0;
+
+	function on_load() {
+		loaded++;
+		if (loaded == sources.length) {
+			on_complete();
+		}
+	}
+	
+	for (var i = 0; i < sources.length; i++) {
+		var img = new Image();
+		img.addEventListener('load', on_load);
+		img.src = sources[i];
+		image_objects.push(img);
+	}
+}
+
+load_images(['assets/tiles_spritesheet.png'], render);
+
+
+
+
+
+
+
+
+
+		// draw current animation frame
+		var tc = player_sprite.tile_to_sprite_col(player_sprite.stand[player_sprite.curr_frame]);
+		var tr = player_sprite.tile_to_sprite_row(player_sprite.stand[player_sprite.curr_frame]);
+
+		game_ctx.drawImage(player_sprite.tilesheet,
+						   (tc-1)*player_sprite.width, (tr-1)*player_sprite.height,
+						   player_sprite.width, player_sprite.height,
+						   player.xpos, player.ypos,
+						   player_sprite.width, player_sprite.height
+		);
+
+		// advance animation
+		player_sprite.curr_frame++;
+		player_sprite.curr_frame %= player_sprite.stand.length;
+
+
+
+
+
+
+	/*
+	if (player.is_jumping == true) {
+		player.frames_jumped++;
+		player.yacc = game_data.gravity;
+		player.yvel = -(game_data.gravity*player.frames_jumped) + player.v0;
+		player.ypos = -(0.5*game_data.gravity*Math.pow(player.frames_jumped, 2)) + (player.yvel*player.frames_jumped) + player.x0;
+		if (player.ypos >= game_data.height - player.height - player.speed - 150) {
+			player.frames_jumped = 0;
+			player.ypos = 400;
+			player.yvel = 0;
+			player.yacc = 0;
+			player.is_jumping = false;
+		}
+	}
+	*/
+
